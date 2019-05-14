@@ -7,4 +7,4 @@ class VideolistSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class to map serializer's fields with the model fields."""
         model = Videos
-        fields = ('title','description','thumbnail','publishdatetime')
+        fields = ('title','description','thumbnail','publishdatetime','videoid')
