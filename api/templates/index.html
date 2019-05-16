@@ -1,110 +1,141 @@
 <!doctype html>
 <html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube V2</title>
 
-    <!-- Disable tap highlight on IE -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Youtube V2</title>
 
-    <!-- Web Application Manifest -->
+  <!-- Disable tap highlight on IE -->
 
-    <!-- Color the status bar on mobile devices -->
-    <meta name="theme-color" content="#2F3BA2">
+  <!-- Web Application Manifest -->
 
-   
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- Color the status bar on mobile devices -->
+  <meta name="theme-color" content="#2F3BA2">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <!-- Our Custom CSS -->
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
-    <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-    <!-- Your styles -->
-  </head><style>
-  
-.col-lg-2.card
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-{
-cursor: pointer;
-}
-.card {
-  margin:3px;
-}
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
-  </style>
-  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-   
-  <div class="container-fluid">
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+  <!-- Your styles -->
+</head>
+<style>
+  .col-lg-2.card {
+    cursor: pointer;
+  }
+
+  .card {
+    margin: 3px;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  #loader {
+    height: 250px;
+    left: 40%;
+    position: absolute;
+    top: 30%;
+    width: 250px;
+  }
+</style>
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+
+  <img style="display:none" id="loader" src="https://loading.io/spinners/dual-ring/lg.dual-ring-loader.gif"
+    style="margin:auto">
+
+
+
+  <div class="container-fluid" id="contents">
     <div class="row">
- 
-<div class="col-lg-10" style="margin:auto">
-    <div class="container-fluid" style="margin-top:10px;">
-      
 
-        <div class="row" style="margin:auto" >
-          <input  class="col-4 form-control" placeholder="Search"   onkeypress="clic(event)" style="float:right !important"  name="query" id="query">&nbsp;
-          <button  class="col-1 form-control"  onclick="clic(event)"   style="float:right" class="form-control" id="button" ><i class="fas fa-search"></i></button>             
-        </div>       
-             </div>
-            <div class="container-fluid" style="margin-top:30px">
-               <div class="row" id="datadiv">
-                {% for item in data %}
-                <div style="cursor:pointer" class="col-lg-2 card">
-                    <img src="{{item.thumbnail}}" style="width:100%;">
-                    <br>
-                    <span>{{item.title}}</span>
-                    <br>
-                </div>
-                {% endfor %}
-        
-               </div>
-        
-           </div>
-</div>
+      <div class="col-lg-10" style="margin:auto">
+        <div class="container-fluid" style="margin-top:10px;">
+
+
+          <div class="row" style="margin:auto">
+            <input class="col-4 form-control" placeholder="Search" onkeypress="clic(event)"
+              style="float:right !important" name="query" id="query">&nbsp;
+            <button class="col-1 form-control" onclick="clic(event)" style="float:right" class="form-control"
+              id="button"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+        <div class="container-fluid" style="margin-top:30px">
+          <div class="row" id="datadiv">
+            {% for item in data %}
+
+            <div style="cursor:pointer" class="col-lg-2 card">
+              <a href="https://www.youtube.com/watch?v={{item.videoid}}" target="_blank" style="text-decoration:none">
+                <img src="{{item.thumbnail}}" style="width:100%;">
+                <br>
+                <span>{{item.title}}</span>
+                <br>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
-   <script type="text/javascript">
+  <script type="text/javascript">
     function clic(event) {
-      if(event.type=="click"||  event.key=="Enter")
-     {
-      var query = $('#query').val();
-      $.ajax({
-        url: '/api/videos/?format=json&query='+query,
-        dataType: 'json',
-        success: function (data) {
-          var dataType = document.getElementById('datadiv');
-          dataType.innerHTML ="";
-          data['results'].forEach(element => {
-            var f= document.createElement('div');
-            f.setAttribute('class','col-lg-2 card');   
-            var img= document.createElement('img');
-            img.setAttribute('src',element['thumbnail']);
-            img.style.width='100%';
-            f.appendChild(img);
-            f.appendChild(document.createElement('br'));
-            var span = document.createElement('span');
-            span.innerText = element['title'];
-            f.appendChild(document.createElement('br'));
-            f.appendChild(span);
-            dataType.append(f);
-          });
-         $(this).data= data['results'];
-        }
-      });
-     }
+      if (event.type == "click" || event.key == "Enter") {
+        document.getElementById('loader').style.display = "block";
+        document.getElementById('contents').style.display = "none";
+
+        var query = $('#query').val();
+        $.ajax({
+          url: '/api/videos/?format=json&query=' + query,
+          dataType: 'json',
+          success: function (data) {
+            var dataType = document.getElementById('datadiv');
+            dataType.innerHTML = "";
+            data['results'].forEach(element => {
+              var outerdiv = document.createElement('div');
+              outerdiv.setAttribute('class', 'col-lg-2 card');
+              var f = document.createElement('a');
+              f.setAttribute('href', 'https://www.youtube.com/watch?v=' + element['videoid']);
+              f.setAttribute('target', '_blank');
+              f.setAttribute('style', 'text-decoration:none');
+              var img = document.createElement('img');
+              img.setAttribute('src', element['thumbnail']);
+              img.style.width = '100%';
+              f.appendChild(img);
+              f.appendChild(document.createElement('br'));
+              var span = document.createElement('span');
+              span.innerText = element['title'];
+              f.appendChild(document.createElement('br'));
+              f.appendChild(span);
+              outerdiv.append(f);
+              dataType.append(outerdiv);
+            });
+            document.getElementById('loader').style.display = "none";
+            document.getElementById('contents').style.display = "block";
+          }
+        });
+      }
     }
-     
-  
-   
-    </script>
-  </body>
+
+
+
+  </script>
+</body>
+
 </html>
