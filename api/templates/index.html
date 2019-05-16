@@ -5,66 +5,106 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Starter Kit</title>
+    <title>Youtube V2</title>
 
     <!-- Disable tap highlight on IE -->
-    <meta name="msapplication-tap-highlight" content="no">
 
     <!-- Web Application Manifest -->
-
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Web Starter Kit">
-
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
-
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#2F3BA2">
 
     <!-- Color the status bar on mobile devices -->
     <meta name="theme-color" content="#2F3BA2">
 
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <!-- Material Design icons -->
+   
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
-    <!-- Material Design Lite page styles:
-    You can choose other color schemes from the CDN, more info here http://www.getmdl.io/customize/index.html
-    Format: material.color1-color2.min.css, some examples:
-    material.red-teal.min.css
-    material.blue-orange.min.css
-    material.purple-indigo.min.css
-    -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <!-- Your styles -->
-  </head>
+  </head><style>
+  
+.col-lg-2.card
+
+{
+cursor: pointer;
+}
+.card {
+  margin:3px;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+  </style>
   <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-   <div class="container-fluid" style="height:30%;width:100%">
-    
-&nbsp;
-   </div>
-    <div class="container-fluid" style="margin-top:30%">
-       <div class="row">
-        {% for item in data %}
-        <div class="col-lg-2 ">
-            <img src="{{item.thumbnail}}" style="width:100%;">
-            <span> {{item.title}}</span>
-            <span>{{item.description}}</span>
-        </div>
-        {% endfor %}
+   
+  <div class="container-fluid">
+    <div class="row">
+ 
+<div class="col-lg-10" style="margin:auto">
+    <div class="container-fluid" style="margin-top:10px;">
+      
 
-       </div>
+        <div class="row" style="margin:auto" >
+          <input  class="col-4 form-control" placeholder="Search"   onkeypress="clic(event)" style="float:right !important"  name="query" id="query">&nbsp;
+          <button  class="col-1 form-control"  onclick="clic(event)"   style="float:right" class="form-control" id="button" ><i class="fas fa-search"></i></button>             
+        </div>       
+             </div>
+            <div class="container-fluid" style="margin-top:30px">
+               <div class="row" id="datadiv">
+                {% for item in data %}
+                <div style="cursor:pointer" class="col-lg-2 card">
+                    <img src="{{item.thumbnail}}" style="width:100%;">
+                    <br>
+                    <span>{{item.title}}</span>
+                    <br>
+                </div>
+                {% endfor %}
+        
+               </div>
+        
+           </div>
+</div>
+    </div>
 
-   </div>
+  </div>
+   <script type="text/javascript">
+    function clic(event) {
+      if(event.type=="click"||  event.key=="Enter")
+     {
+      var query = $('#query').val();
+      $.ajax({
+        url: '/api/videos/?format=json&query='+query,
+        dataType: 'json',
+        success: function (data) {
+          var dataType = document.getElementById('datadiv');
+          dataType.innerHTML ="";
+          data['results'].forEach(element => {
+            var f= document.createElement('div');
+            f.setAttribute('class','col-lg-2 card');   
+            var img= document.createElement('img');
+            img.setAttribute('src',element['thumbnail']);
+            img.style.width='100%';
+            f.appendChild(img);
+            f.appendChild(document.createElement('br'));
+            var span = document.createElement('span');
+            span.innerText = element['title'];
+            f.appendChild(document.createElement('br'));
+            f.appendChild(span);
+            dataType.append(f);
+          });
+         $(this).data= data['results'];
+        }
+      });
+     }
+    }
+     
+  
+   
+    </script>
   </body>
 </html>
