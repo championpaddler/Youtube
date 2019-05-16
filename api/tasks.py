@@ -1,12 +1,10 @@
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from django.db.models.fields import DateField
-from django.db.models.functions import Cast
 
 from datetime import datetime
 from api.models import Videos
+#Api Key 
 DEVELOPER_KEY = 'AIzaSyCnzBS9oaJuc9TqRPSNsKK_Fwf8vlX2haA'
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'

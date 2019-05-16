@@ -20,7 +20,9 @@ from api.views import homepage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # Api Urls Here
     url(r'^api/', include('api.urls')),
+    #Dashboard Url
     url(r'^', homepage),
 
 ]

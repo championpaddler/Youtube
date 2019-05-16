@@ -3,7 +3,7 @@
 ##Steps
 
 1. Clone the project
-2. cd djangorest
+2. pip install requiements and cd djangorest
 3. Run `python manage.py runserver` in terminal
 4. Run `celery -A djangorest worker -l info && celery -A djangorest beat -l info` in other terminal
 
